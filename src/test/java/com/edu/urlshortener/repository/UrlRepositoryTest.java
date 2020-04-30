@@ -6,37 +6,41 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class UrlRepositoryTest {
+    private static final String HTTP_EXISTENT_URL = "http://existent.com";
+    private static final String HTTP_NONEXISTENT_URL = "http://nonexistent.com";
+    private static final String EXISTENT_ID = "1";
+
     private UrlRepository repository;
 
     @BeforeEach
     void setup (){
         repository = new UrlRepository();
-        repository.createUrl("http://existent.existent");
+        repository.createUrl(HTTP_EXISTENT_URL);
     }
 
     @Test
     void shouldCreateUrlCorrectly() {
-        Url expected = Url.builder().id("2").url("http://nonexistent.nonexistent").build();
-        Url result = repository.createUrl("http://nonexistent.nonexistent");
+        Url expected = Url.builder().id("2").url(HTTP_NONEXISTENT_URL).build();
+        Url result = repository.createUrl(HTTP_NONEXISTENT_URL);
         Assertions.assertEquals(expected, result);
     }
 
     @Test
     void shouldReturnUrlWhenFindByUrlIsCalledWithExistentUrl() {
-        Url expected = Url.builder().id("1").url("http://existent.existent").build();
-        Url result = repository.findByUrl("http://existent.existent");
+        Url expected = Url.builder().id(EXISTENT_ID).url(HTTP_EXISTENT_URL).build();
+        Url result = repository.findByUrl(HTTP_EXISTENT_URL);
         Assertions.assertEquals(expected, result);
     }
 
     @Test
     void shouldReturnNullWhenFindByUrlIsCalledWithNonExistentUrl() {
-        Assertions.assertNull(repository.findByUrl("http://nonexistent.nonexistent"));
+        Assertions.assertNull(repository.findByUrl(HTTP_NONEXISTENT_URL));
     }
 
     @Test
     void shouldReturnUrlWhenFindByIdIsCalledWithExistentUrl() {
-        Url expected = Url.builder().id("1").url("http://existent.existent").build();
-        Url result = repository.findById("1");
+        Url expected = Url.builder().id(EXISTENT_ID).url(HTTP_EXISTENT_URL).build();
+        Url result = repository.findById(EXISTENT_ID);
         Assertions.assertEquals(expected, result);
     }
 

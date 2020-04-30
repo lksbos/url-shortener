@@ -17,7 +17,7 @@ public class UrlService {
     }
 
     public Url createUrl(final String url){
-        String formattedUrl = UrlUtils.buildUrl(url);
+        String formattedUrl = UrlUtils.formatUrl(url);
         if(!urlValidator.isValid(formattedUrl)) {
             throw new IllegalArgumentException("Url is invalid!");
         }
