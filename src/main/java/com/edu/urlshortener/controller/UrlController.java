@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @Slf4j
 public class UrlController {
@@ -29,10 +31,15 @@ public class UrlController {
     }
 
     @PostMapping("/")
-    public ModelAndView shortenUrl(@ModelAttribute UrlDTO urlDTO, ModelMap modelMap) {
-        Url url = urlService.createUrl(urlDTO.getUrl());
-        urlDTO.setShortUrl("http://localhost:8080/" + url.getId());
-        urlDTO.setUrl(url.getUrl());
+    public ModelAndView shortenUrl(@ModelAttribute UrlDTO urlDTO, ModelMap modelMap, HttpServletRequest request) {
+        try {
+            Url url = urlService.createUrl(urlDTO.getUrl());
+            urlDTO.setShortUrl(request.getRequestURL().toString() + url.getId());
+            urlDTO.setUrl(url.getUrl());
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
+            urlDTO.setErrorMessage(e.getMessage());
+        }
 
         return new ModelAndView("index", modelMap);
     }
