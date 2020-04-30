@@ -2,7 +2,7 @@ package com.edu.urlshortener.controller;
 
 import com.edu.urlshortener.model.dto.UrlDTO;
 import com.edu.urlshortener.model.entity.Url;
-import com.edu.urlshortener.service.UrlService;
+import com.edu.urlshortener.service.impl.UrlServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +45,7 @@ class UrlControllerTest {
     }
 
     @MockBean
-    private UrlService service;
+    private UrlServiceImpl service;
 
     @Test
     void shouldReturnIndexForm() throws Exception {

@@ -1,6 +1,7 @@
 package com.edu.urlshortener.repository;
 
 import com.edu.urlshortener.model.entity.Url;
+import com.edu.urlshortener.repository.impl.UrlRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class UrlRepositoryTest {
 
     @BeforeEach
     void setup (){
-        repository = new UrlRepository();
+        repository = new UrlRepositoryImpl();
         repository.createUrl(HTTP_EXISTENT_URL);
     }
 

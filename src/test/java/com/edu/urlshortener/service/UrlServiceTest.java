@@ -1,7 +1,8 @@
 package com.edu.urlshortener.service;
 
 import com.edu.urlshortener.model.entity.Url;
-import com.edu.urlshortener.repository.UrlRepository;
+import com.edu.urlshortener.repository.impl.UrlRepositoryImpl;
+import com.edu.urlshortener.service.impl.UrlServiceImpl;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,9 +25,9 @@ class UrlServiceTest {
     private static final String EXISTENT_ID = "1";
 
     @InjectMocks
-    private UrlService service;
+    private UrlServiceImpl service;
     @Mock
-    private UrlRepository repository;
+    private UrlRepositoryImpl repository;
     @Mock
     private UrlValidator urlValidator;
 
