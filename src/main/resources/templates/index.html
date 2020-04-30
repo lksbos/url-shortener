@@ -2,19 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Url Shortener</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <h2>URL Shortener</h2><br/>
-    <form action="#" th:action="@{/}" th:object="${urlDTO}" method="post">
-        <input type="text" th:field="*{url}" id="address"
-               placeholder="Enter URL" required>
-        <input type="submit" value="Shorten"><br/>
-        <a th:if="*{shortUrl}" th:href="*{shortUrl}">
-            <span th:text="*{shortUrl}"></span>
-        </a>
-        <p th:if="*{errorMessage}" th:text="*{errorMessage}"></p>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>URL Shortener</h2>
+            </div>
+        </div>
+        <form id="main-form" action="#" th:action="@{/}" th:object="${urlDTO}" method="post">
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input id="url" class="form-control form-control-lg" type="text" th:field="*{url}"
+                           placeholder="Enter URL" required>
+                </div>
+                <div class="col-sm-2">
+                    <input id="submit-button" type="submit" class="btn btn-lg btn-primary" value="Shorten">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10">
+                    <a th:if="*{shortUrl}" th:href="*{shortUrl}">
+                        <span id="short-url" class="col-form-label" th:text="*{shortUrl}"></span>
+                    </a>
+                    <div id="error-message" class="alert alert-danger" th:if="*{errorMessage}" role="alert"
+                         th:text="*{errorMessage}">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
