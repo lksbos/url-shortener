@@ -18,7 +18,7 @@ public class UrlServiceImpl implements UrlService {
     }
 
     @Override
-    public Url createUrl(final String url){
+    public synchronized Url createUrl(final String url){
         String formattedUrl = UrlUtils.formatUrl(url);
         if(!urlValidator.isValid(formattedUrl)) {
             throw new IllegalArgumentException("Url is invalid!");
