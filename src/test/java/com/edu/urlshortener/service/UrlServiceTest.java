@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -22,7 +21,8 @@ import static org.mockito.Mockito.when;
 class UrlServiceTest {
     private static final String HTTP_EXISTENT_URL = "http://existenturl.com";
     private static final String EXISTENT_URL = "existenturl.com";
-    private static final String EXISTENT_ID = "1";
+    private static final long EXISTENT_ID = 1L;
+    private static final String EXISTENT_HASH_ID = "b";
 
     @InjectMocks
     private UrlServiceImpl service;
@@ -33,16 +33,16 @@ class UrlServiceTest {
 
     @Test
     void shouldCreateUrlCorrectlyWhenItDoesNotExist() {
-        when(urlValidator.isValid(eq(HTTP_EXISTENT_URL))).thenReturn(true);
-        when(repository.findByUrl(eq(HTTP_EXISTENT_URL))).thenReturn(null);
-        when(repository.createUrl(eq(HTTP_EXISTENT_URL))).thenReturn(Url.builder().build());
+        when(urlValidator.isValid(HTTP_EXISTENT_URL)).thenReturn(true);
+        when(repository.findByUrl(HTTP_EXISTENT_URL)).thenReturn(null);
+        when(repository.createUrl(HTTP_EXISTENT_URL)).thenReturn(Url.builder().build());
         assertNotNull(service.createUrl(EXISTENT_URL));
     }
 
     @Test
     void shouldReturnExistentUrlWhenTryingToCreateUrlThatAlreadyExists() {
-        when(urlValidator.isValid(eq(HTTP_EXISTENT_URL))).thenReturn(true);
-        when(repository.findByUrl(eq(HTTP_EXISTENT_URL))).thenReturn(Url.builder().build());
+        when(urlValidator.isValid(HTTP_EXISTENT_URL)).thenReturn(true);
+        when(repository.findByUrl(HTTP_EXISTENT_URL)).thenReturn(Url.builder().build());
         assertNotNull(service.createUrl(EXISTENT_URL));
         verify(repository, never()).createUrl(anyString());
     }
@@ -50,19 +50,19 @@ class UrlServiceTest {
     @Test
     void shouldThrowExceptionWhenTryingToCreateUrlWithInvalidUrl() {
         final String url = "udp://invalid.com";
-        when(urlValidator.isValid(eq(url))).thenReturn(false);
+        when(urlValidator.isValid(url)).thenReturn(false);
         assertThrows(IllegalArgumentException.class, () -> service.createUrl(url));
     }
 
     @Test
     void shouldGetOriginalUrlCorrectly() {
-        when(repository.findById(eq(EXISTENT_ID))).thenReturn(Url.builder().build());
-        assertNotNull(service.getUrl(EXISTENT_ID));
+        when(repository.findById(EXISTENT_ID)).thenReturn(Url.builder().id(EXISTENT_ID).build());
+        assertNotNull(service.getUrl(EXISTENT_HASH_ID));
     }
 
     @Test
     void shouldThrowExceptionWhenGetOriginalUrlWithInvalidUrl() {
-        when(repository.findById(eq(EXISTENT_ID))).thenReturn(null);
-        assertThrows(IllegalArgumentException.class, () -> service.getUrl(EXISTENT_ID));
+        when(repository.findById(EXISTENT_ID)).thenReturn(null);
+        assertThrows(IllegalArgumentException.class, () -> service.getUrl(EXISTENT_HASH_ID));
     }
 }

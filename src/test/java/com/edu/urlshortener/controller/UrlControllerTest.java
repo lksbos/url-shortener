@@ -33,6 +33,7 @@ class UrlControllerTest {
     private static final String INDEX_PATH = "/";
     private static final String URL_PARAM = "url";
     private static final String REDIRECT_URL = "/1";
+    public static final String SHORT_URL = "http://localhost/b";
 
     @Autowired
     private WebApplicationContext wac;
@@ -58,10 +59,10 @@ class UrlControllerTest {
     void shouldShortenUrlCorrectly() throws Exception {
         Url created = Url.builder()
                 .url(HTTP_URL_COM)
-                .id("1").build();
+                .id(1L).build();
         UrlDTO expected =  UrlDTO.builder()
                 .url(HTTP_URL_COM)
-                .shortUrl("http://localhost/1").build();
+                .shortUrl(SHORT_URL).build();
         when(service.createUrl(eq(HTTP_URL_COM))).thenReturn(created);
 
         mockMvc.perform(MockMvcRequestBuilders.post(INDEX_PATH)
@@ -90,9 +91,9 @@ class UrlControllerTest {
 
     @Test
     void shouldRedirectToUrlCorrectly() throws Exception {
-        Url found = Url.builder()
+        UrlDTO found = UrlDTO.builder()
                 .url(HTTP_URL_COM)
-                .id("1").build();
+                .shortUrl(SHORT_URL).build();
 
         when(service.getUrl(ArgumentMatchers.any())).thenReturn(found);
 

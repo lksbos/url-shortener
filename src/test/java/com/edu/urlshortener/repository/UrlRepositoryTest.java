@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class UrlRepositoryTest {
     private static final String HTTP_EXISTENT_URL = "http://existent.com";
     private static final String HTTP_NONEXISTENT_URL = "http://nonexistent.com";
-    private static final String EXISTENT_ID = "1";
+    private static final long EXISTENT_ID = 1L;
 
     private UrlRepository repository;
 
@@ -21,7 +21,7 @@ class UrlRepositoryTest {
 
     @Test
     void shouldCreateUrlCorrectly() {
-        Url expected = Url.builder().id("2").url(HTTP_NONEXISTENT_URL).build();
+        Url expected = Url.builder().id(2L).url(HTTP_NONEXISTENT_URL).build();
         Url result = repository.createUrl(HTTP_NONEXISTENT_URL);
         Assertions.assertEquals(expected, result);
     }
@@ -47,7 +47,7 @@ class UrlRepositoryTest {
 
     @Test
     void shouldReturnNullWhenFindByIdIsCalledWithNonExistentUrl() {
-        Assertions.assertNull(repository.findById("nonExistent"));
+        Assertions.assertNull(repository.findById(0L));
     }
 
 
